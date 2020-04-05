@@ -8,7 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import vuetify from   './vuetify';
+import vuetify from   './vuetify.js';
 import router from './router';
 
 /**
@@ -31,11 +31,12 @@ import Example from './components/ExampleComponent'
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
+ new Vue({
     el: '#app',
+    router,
+    vuetify,
     components:{
-        router,
-        vuetify,
+     
         'example-component':Example
     }
 });

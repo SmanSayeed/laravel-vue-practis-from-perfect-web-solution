@@ -1,17 +1,8 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">saad Component</div>
-
-                    <div class="card-body">
-                        I'm an saad component.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <v-container>
+    <v-alert type="info">I am Saad</v-alert>
+  </v-container>
+  
 </template>
 
 <script>
