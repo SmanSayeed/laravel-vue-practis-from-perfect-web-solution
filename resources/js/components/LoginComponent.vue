@@ -26,29 +26,54 @@
                 
               </v-toolbar>
               <v-card-text>
+                  <v-progress-linear
+                    :active="loading"
+                    :indeterminate="loading"
+                    absolute
+                    top
+                    color="white accent-4"
+                  ></v-progress-linear>
                 <v-form>
                   <v-text-field
                     label="Login"
                     name="login"
-                    prepend-icon="mdi-person"
-                    type="text"
+                 
+                    prepend-icon="mdi-account-circle-outline"
+                    type="email"
                   />
 
                   <v-text-field
                     id="password"
                     label="Password"
                     name="password"
-                    prepend-icon="mdi-lock"
+            
+                    prepend-icon="mdi-account-lock-outline"
                     type="password"
                   />
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="error">Login</v-btn>
+                <v-btn color="error" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
+
+
+                      <v-snackbar
+                          v-model="snackbar"
+                        >
+                          {{ text }}
+                          <v-btn
+                            color="pink"
+                            text
+                            @click="snackbar = false"
+                          >
+                            Close
+                          </v-btn>
+                     </v-snackbar>
+
+
         </v-row>
       </v-container>
     </v-content>
@@ -58,4 +83,69 @@
 <script>
 export default{}
 </script>
+
+
+<script>
+  export default{
+    data(){
+      return {
+
+        email:'',
+        password:'',
+        loading:false,
+        snackbar:false,
+        text:''
+
+      }
+    },
+    created(){
+      this.$vuetify.theme.dark = true;
+    }, 
+    methods:{
+      login: function(){
+
+
+
+                // Add a request interceptor
+        axios.interceptors.request.use((config) => {
+
+           this.loading = true;
+            return config;
+
+          },  (error) => {
+            this.loading = false;
+            return Promise.reject(error);
+          });
+
+        // Add a response interceptor
+        axios.interceptors.response.use((response) => {
+           this.loading = false;
+            return response;
+          },  (error) => {
+           this.loading = false
+            return Promise.reject(error);
+          });
+          axios.post('api/login',
+              {
+                'email':this.email,
+                'password':this.password
+              })
+          .then(res=>{
+
+              localStorage.setItem('token',res.data.token);
+
+
+          }).catch(err => {
+
+              this.text = err.response.data.status;
+              this.snackbar  = true;
+
+          })
+
+      }
+    }
+    
+  }
+</script>
+
 <style scoped></style>

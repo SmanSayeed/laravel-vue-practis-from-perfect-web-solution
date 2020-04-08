@@ -2149,7 +2149,81 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      email: '',
+      password: '',
+      loading: false,
+      snackbar: false,
+      text: ''
+    };
+  },
+  created: function created() {
+    this.$vuetify.theme.dark = true;
+  },
+  methods: {
+    login: function login() {
+      var _this = this;
+
+      // Add a request interceptor
+      axios.interceptors.request.use(function (config) {
+        _this.loading = true;
+        return config;
+      }, function (error) {
+        _this.loading = false;
+        return Promise.reject(error);
+      }); // Add a response interceptor
+
+      axios.interceptors.response.use(function (response) {
+        _this.loading = false;
+        return response;
+      }, function (error) {
+        _this.loading = false;
+        return Promise.reject(error);
+      });
+      axios.post('api/login', {
+        'email': this.email,
+        'password': this.password
+      }).then(function (res) {
+        localStorage.setItem('token', res.data.token);
+      })["catch"](function (err) {
+        _this.text = err.response.data.status;
+        _this.snackbar = true;
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -20042,6 +20116,16 @@ var render = function() {
                           _c(
                             "v-card-text",
                             [
+                              _c("v-progress-linear", {
+                                attrs: {
+                                  active: _vm.loading,
+                                  indeterminate: _vm.loading,
+                                  absolute: "",
+                                  top: "",
+                                  color: "white accent-4"
+                                }
+                              }),
+                              _vm._v(" "),
                               _c(
                                 "v-form",
                                 [
@@ -20049,8 +20133,9 @@ var render = function() {
                                     attrs: {
                                       label: "Login",
                                       name: "login",
-                                      "prepend-icon": "mdi-person",
-                                      type: "text"
+                                      "prepend-icon":
+                                        "mdi-account-circle-outline",
+                                      type: "email"
                                     }
                                   }),
                                   _vm._v(" "),
@@ -20059,7 +20144,8 @@ var render = function() {
                                       id: "password",
                                       label: "Password",
                                       name: "password",
-                                      "prepend-icon": "mdi-lock",
+                                      "prepend-icon":
+                                        "mdi-account-lock-outline",
                                       type: "password"
                                     }
                                   })
@@ -20075,14 +20161,56 @@ var render = function() {
                             [
                               _c("v-spacer"),
                               _vm._v(" "),
-                              _c("v-btn", { attrs: { color: "error" } }, [
-                                _vm._v("Login")
-                              ])
+                              _c(
+                                "v-btn",
+                                {
+                                  attrs: { color: "error" },
+                                  on: { click: _vm.login }
+                                },
+                                [_vm._v("Login")]
+                              )
                             ],
                             1
                           )
                         ],
                         1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-snackbar",
+                    {
+                      model: {
+                        value: _vm.snackbar,
+                        callback: function($$v) {
+                          _vm.snackbar = $$v
+                        },
+                        expression: "snackbar"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                         " +
+                          _vm._s(_vm.text) +
+                          "\n                         "
+                      ),
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "pink", text: "" },
+                          on: {
+                            click: function($event) {
+                              _vm.snackbar = false
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                           Close\n                         "
+                          )
+                        ]
                       )
                     ],
                     1
@@ -76935,14 +77063,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************!*\
   !*** ./resources/js/components/LoginComponent.vue ***!
   \****************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LoginComponent_vue_vue_type_template_id_4d2414bf_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LoginComponent.vue?vue&type=template&id=4d2414bf&scoped=true& */ "./resources/js/components/LoginComponent.vue?vue&type=template&id=4d2414bf&scoped=true&");
 /* harmony import */ var _LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LoginComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/LoginComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _LoginComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -76972,7 +77101,7 @@ component.options.__file = "resources/js/components/LoginComponent.vue"
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/LoginComponent.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -77029,7 +77158,14 @@ var routes = [{
 }, {
   path: '/admin',
   component: _components_AdminComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
-  name: 'Admin'
+  name: 'Admin',
+  beforeEnter: function beforeEnter(to, from, next) {
+    if (localStorage.getItem('token')) {
+      next('/admin');
+    } else {
+      next('/login');
+    }
+  }
 }];
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: routes
