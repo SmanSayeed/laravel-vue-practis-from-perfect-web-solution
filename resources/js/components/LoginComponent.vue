@@ -33,11 +33,21 @@
                     top
                     color="white accent-4"
                   ></v-progress-linear>
-                <v-form>
-                  <v-text-field
-                    label="Login"
-                    name="login"
+                <v-form
+
+                  ref="form"
+                  v-model="valid"
+                
                  
+                
+                >
+                  <v-text-field
+                  
+                    name="login"
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
                     prepend-icon="mdi-account-circle-outline"
                     type="email"
                   />
@@ -46,15 +56,19 @@
                     id="password"
                     label="Password"
                     name="password"
-            
+                    v-model="password"
                     prepend-icon="mdi-account-lock-outline"
                     type="password"
+                     :rules="passwordRules"
+                     required
                   />
                 </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="error" @click="login">Login</v-btn>
+                <v-btn color="error" @click="login"
+                     :disabled="!valid"
+                >Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -89,6 +103,16 @@ export default{}
   export default{
     data(){
       return {
+        
+        valid: true,
+        emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+         passwordRules: [
+        v => !!v || 'Password is required',
+      
+      ],
 
         email:'',
         password:'',
@@ -132,7 +156,16 @@ export default{}
               })
           .then(res=>{
 
+              //console.dir(res)
+              //console.log(res.data.token)
+
               localStorage.setItem('token',res.data.token);
+              localStorage.setItem('loggedIn',true);
+              
+              
+              this.$router.push('/admin')
+                .then(res=> console.log("logged in Successfully"))
+                .catch( err => console.log(err))
 
 
           }).catch(err => {
